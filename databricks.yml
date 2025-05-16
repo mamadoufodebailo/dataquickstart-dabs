@@ -7,23 +7,62 @@ bundle:
 include:
   - resources/*.yml
 
+
+variables:
+  my_lab_user_name: 
+    default: ${workspace.current_user.short_name}
+
+  catalog_dev:
+    default: dev
+
+  catalog_prod: 
+    default: test
+
+  target_catalog: 
+    default: ${var.catalog_dev}
+
+  raw_data_path:
+    default: /Volumes/test/test/invoice_volume/bikes
+
+  my_cluster_id:
+    lookup: 
+      cluster: "Mamadou's Cluster"
+
+
 targets:
   dev:
-    # The default target uses 'mode: development' to create a development copy.
-    # - Deployed resources get prefixed with '[dev my_user_name]'
-    # - Any job schedules and triggers are paused by default.
-    # See also https://docs.databricks.com/dev-tools/bundles/deployment-modes.html.
     mode: development
     default: true
     workspace:
       host: https://adb-3617583287422773.13.azuredatabricks.net
+      root_path: /Workspace/Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}
+    resources:
+      jobs:
+        demo03_job:
+          tasks:
+            - task_key: create_bronze_table
+              existing_cluster_id: ${var.my_cluster_id}
+            - task_key: create_silver_table
+              existing_cluster_id: ${var.my_cluster_id}
+            - task_key: create_gold_table
+              existing_cluster_id: ${var.my_cluster_id}
+    permissions:
+      - user_name: mdiallo@armelbaenaconseil.onmicrosoft.com
+        level: CAN_MANAGE
 
   prod:
     mode: production
     workspace:
       host: https://adb-3617583287422773.13.azuredatabricks.net
-      # We explicitly deploy to /Workspace/Users/mdiallo@armelbaenaconseil.onmicrosoft.com to make sure we only have a single copy.
-      root_path: /Workspace/Users/mdiallo@armelbaenaconseil.onmicrosoft.com/.bundle/${bundle.name}/${bundle.target}
+      root_path: /Workspace/Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}
+    variables:
+      target_catalog: ${var.catalog_prod}
+
     permissions:
       - user_name: mdiallo@armelbaenaconseil.onmicrosoft.com
         level: CAN_MANAGE
+      - service_principal_name: da5a8872-ce21-48df-b812-da93ce05f86c
+        level: CAN_RUN
+
+    run_as:
+      service_principal_name: da5a8872-ce21-48df-b812-da93ce05f86c
