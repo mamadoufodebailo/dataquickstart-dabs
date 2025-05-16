@@ -5,6 +5,6 @@ __pycache__/
 *.egg-info
 .venv/
 scratch/**
-fixtures/**
+fixtures/
 !scratch/README.md
-.vscode/**
+.vscode/
