@@ -1,0 +1,29 @@
+# This is a Databricks asset bundle definition for dataquickstart_dabs.
+# See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
+bundle:
+  name: dataquickstart_dabs
+  uuid: ab0f4973-10aa-46aa-b770-4d5699139f50
+
+include:
+  - resources/*.yml
+
+targets:
+  dev:
+    # The default target uses 'mode: development' to create a development copy.
+    # - Deployed resources get prefixed with '[dev my_user_name]'
+    # - Any job schedules and triggers are paused by default.
+    # See also https://docs.databricks.com/dev-tools/bundles/deployment-modes.html.
+    mode: development
+    default: true
+    workspace:
+      host: https://adb-3617583287422773.13.azuredatabricks.net
+
+  prod:
+    mode: production
+    workspace:
+      host: https://adb-3617583287422773.13.azuredatabricks.net
+      # We explicitly deploy to /Workspace/Users/mdiallo@armelbaenaconseil.onmicrosoft.com to make sure we only have a single copy.
+      root_path: /Workspace/Users/mdiallo@armelbaenaconseil.onmicrosoft.com/.bundle/${bundle.name}/${bundle.target}
+    permissions:
+      - user_name: mdiallo@armelbaenaconseil.onmicrosoft.com
+        level: CAN_MANAGE
