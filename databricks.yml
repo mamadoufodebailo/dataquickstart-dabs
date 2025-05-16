@@ -47,7 +47,7 @@ targets:
             - task_key: create_gold_table
               existing_cluster_id: ${var.my_cluster_id}
     permissions:
-      - user_name: mdiallo@armelbaenaconseil.onmicrosoft.com
+      - user_name: ${workspace.current_user.userName}
         level: CAN_MANAGE
 
   prod:
@@ -59,7 +59,7 @@ targets:
       target_catalog: ${var.catalog_prod}
 
     permissions:
-      - user_name: mdiallo@armelbaenaconseil.onmicrosoft.com
+      - user_name: ${workspace.current_user.userName}
         level: CAN_MANAGE
       - service_principal_name: da5a8872-ce21-48df-b812-da93ce05f86c
         level: CAN_RUN
