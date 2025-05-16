@@ -19,6 +19,12 @@ resources:
           notebook_task:
             notebook_path: ../src/create_gold_table.ipynb
             source: WORKSPACE
+        - task_key: create_dlt_pipeline
+          depends_on:
+            - task_key: create_silver_table
+          pipeline_task:
+            pipeline_id: ${resources.pipelines.demo_03_pipeline.id}
+
       parameters:
         - name: display_target
           default: ${bundle.target}

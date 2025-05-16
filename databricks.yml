@@ -64,5 +64,5 @@ targets:
       - service_principal_name: da5a8872-ce21-48df-b812-da93ce05f86c
         level: CAN_RUN
 
-    run_as:
-      service_principal_name: da5a8872-ce21-48df-b812-da93ce05f86c
+    #run_as:
+    #  service_principal_name: da5a8872-ce21-48df-b812-da93ce05f86c

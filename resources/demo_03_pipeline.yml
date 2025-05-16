@@ -1,0 +1,14 @@
+resources:
+  pipelines:
+    demo_03_pipeline:
+      name: ${bundle.target}_demo03_pipeline_${workspace.current_user.userName}
+      catalog: ${var.target_catalog}
+      schema: "default"
+      libraries:
+        - notebook:
+            path: ../src/dlt_pipelines.ipynb
+      configuration:
+        display_target: ${bundle.target}
+        catalog_name: ${var.target_catalog}
+        raw_data_path: ${var.raw_data_path}
+        
