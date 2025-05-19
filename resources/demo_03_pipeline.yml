@@ -3,7 +3,7 @@ resources:
     demo_03_pipeline:
       name: ${bundle.target}_demo03_pipeline_${workspace.current_user.userName}
       catalog: ${var.target_catalog}
-      target: "default"
+      schema: "default"
       serverless: true
       libraries:
         - notebook:
