@@ -7,7 +7,6 @@ bundle:
 include:
   - resources/*.yml
 
-
 variables:
   my_lab_user_name: 
     default: ${workspace.current_user.short_name}
